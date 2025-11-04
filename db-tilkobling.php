@@ -13,5 +13,3 @@ $database = getenv('DB_DATABASE');
 
 
 
-
-
