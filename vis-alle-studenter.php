@@ -1,3 +1,24 @@
-<?php 
-	print ("<h3>Vis alle studenter</h3>"); 
-?> 
+<?php
+  print ("<h3>Vis alle studenter</h3>");
+  include("db-tilkobling.php");  /* tilkobling til database-serveren utført og valg av database foretatt */
+
+  $sqlSetning="SELECT * FROM Student;";
+
+  $sqlResultat=mysqli_query($db,$sqlSetning) or die ("ikke mulig &aring; hente data fra databasen");
+    /* SQL-setning sendt til database-serveren */
+
+  $antallRader=mysqli_num_rows($sqlResultat);  /* antall rader i resultatet beregnet */
+
+  print ("<table border=1>");
+  print ("<tr><th align=left>Klassekode</th> <th align=left>Student</th></tr>");
+
+  for ($r=1;$r<=$antallRader;$r++)
+    {
+      $rad=mysqli_fetch_array($sqlResultat);  /* ny rad hentet fra spørringsresultatet */
+      $Klassekode=$rad["Klassekode"];
+      $Student=$rad["Student"];
+
+      print ("<tr> <td> $Klassekode </td> <td> $Student </td> </tr>");
+    }
+  print ("</table>");
+?>
