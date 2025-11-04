@@ -3,7 +3,20 @@
 ?>
 
 <form method="post" action="" id="registrerStudentSkjema" name="registrerStudentSkjema">
-  Klassekode <input type="text" id="Klassekode" name="Klassekode" required /> <br/>
+  Klassekode <select name="Klassekode" id="Klassekode" required>
+    <option value="">Velg klassekode</option>
+<?php
+  include("db-tilkobling.php");
+  $sqlSetning="SELECT * FROM Klasseliste ORDER BY Klassekode;";
+  $sqlResultat=mysqli_query($db,$sqlSetning) or die ("ikke mulig &aring; hente data fra databasen");
+
+  while ($rad = mysqli_fetch_array($sqlResultat)) {
+    $klassekode = $rad["Klassekode"];
+    $klasseliste = $rad["Klasseliste"];
+    print("<option value='$klassekode'>$klassekode - $klasseliste</option>");
+  }
+?>
+  </select> <br/>
   Student navn <input type="text" id="Student" name="Student" required /> <br/>
   <input type="submit" value="Registrer student" id="registrerStudentKnapp" name="registrerStudentKnapp" />
   <input type="reset" value="Nullstill" id="nullstill" name="nullstill" /> <br />
